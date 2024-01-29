@@ -1,0 +1,27 @@
+common_vars:
+  ami                        : "ami-09694bfab577e90b0" #al2023-ami-2023.3.20240122.0-kernel-6.1-x86_64 #amazon/al2023-ami-2023.3.20240122.0-kernel-6.1-x86_64
+  instance_type              : "t2.micro"
+  instance_name              : "my-node-app-instance"
+  user_data                  : |
+                                #!/bin/bash
+                                sudo yum update
+                                sudo yum install -y git
+                                sudo yum install nodejs -y
+                                git clone https://github.com/aws-samples/aws-elastic-beanstalk-express-js-sample.git
+                                cd aws-elastic-beanstalk-express-js-sample
+                                sudo npm install
+                                sudo npm install pm2 -g
+                                sudo pm2 start app.js
+
+  #VPC
+  vpc_cidr_block              : "10.0.0.0/16"
+  enable_dns_support          : true
+  enable_dns_hostnames        : true
+
+  #SUBNET
+  subnet_cidr_block           : "10.0.1.0/24"
+  availability_zone           : "us-east-2a"
+  map_public_ip_on_launch     : true
+
+  #ROUTE TABLE
+  destination_cidr_block      : "0.0.0.0/0"
