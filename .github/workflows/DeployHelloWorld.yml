@@ -1,9 +1,7 @@
 name: Deploy Hello World App
 
 on:
-  push:
-    branches:
-      - main  
+  workflow_dispatch
 
 jobs:
   deploy:
